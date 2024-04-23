@@ -29,9 +29,10 @@ jobs:
         with:
           sarif_file: ${{ steps.codeql_iac.outputs.sarif }}
 
-      # New step to upload the SARIF file as an artifact
+      # Ensure the SARIF file exists and upload it as an artifact
       - name: Upload SARIF as an artifact
+        if: always() && success()
         uses: actions/upload-artifact@v2
         with:
           name: codeql-sarif
-          path: ${{ steps.codeql_iac.outputs.sarif }}
+          path: codeql-iac.sarif
